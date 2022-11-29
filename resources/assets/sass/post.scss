@@ -6,3 +6,31 @@ $lfs-grey: #75787b;
 body {
     background-color: $background;
 }
+
+table {
+    width: 100%;
+    caption {
+        text-transform: uppercase;
+        font-weight: bold;
+        color: $lfs-yellow;
+        text-align: center;
+    }
+    thead {
+        border: 5px solid $lfs-yellow;
+        th {
+            text-transform: uppercase;
+            text-align: center;
+            color: $lfs-blue;
+            padding: 10px;
+            border-bottom: 1px solid $lfs-yellow;
+        }
+    }
+    tr {
+        border-bottom: 5px solid $lfs-grey;
+        color: $lfs-grey;
+        td {
+            padding: 10px;
+            border: 1px solid $lfs-blue;
+        }
+    }
+}

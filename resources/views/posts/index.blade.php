@@ -2,18 +2,19 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
+    @vite(['resources/js/app.js'])
     <title>Post List</title>
 </head>
 <body>
-    <h1>Post List</h1>
     <table>
-        <tr>
+        <caption>Post List</caption>
+        <thead>
             <th>Post Title</th>
             <th>Post Description</th>
             <th>Status</th>
             <th>Created at</th>
             <th>Updated at</th>
-        </tr>
+        </thead>
         @foreach($posts as $post)
         <tr>
             <td>{{ $post['title'] }}</td>
