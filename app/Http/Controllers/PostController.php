@@ -24,4 +24,14 @@ class PostController extends Controller
             'posts' => $posts
         ]);
     }
+
+    public function create()
+    {
+        return view('posts.create');
+    }
+
+    public function store(Request $request)
+    {
+        return $this->postService->storePostForPostPage($request);
+    }
 }

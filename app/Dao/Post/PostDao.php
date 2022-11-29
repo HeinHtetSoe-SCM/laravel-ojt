@@ -12,4 +12,9 @@ class PostDao implements PostDaoInterface
     {   
         return Post::all();
     }
+
+    public function storePostForPostPage($request)
+    {
+        return Post::create($request->all());
+    }
 }

@@ -19,4 +19,15 @@ class PostService implements PostServiceInterface
     {
         return $this->postDao->getPostsForPostPage();
     }
+
+    public function storePostForPostPage($request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'status' => 'required'
+        ]);
+        
+        return $this->postDao->storePostForPostPage($request);
+    }
 }
