@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Contracts\Services\Post\PostServiceInterface;
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -18,7 +19,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = $this->postService->getPostsForPostPage();
+        $posts = $this->postService->index();
 
         return view('posts.index', [
             'posts' => $posts
@@ -30,8 +31,32 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        return $this->postService->storePostForPostPage($request);
+        $this->postService->store($request);
+
+        return redirect()->route('posts.index')->with('success', 'Post created successfully.');
+    }
+
+    public function edit($id)
+    {
+        $post = $this->postService->edit($id);
+
+        return view('posts.edit', compact('post'));
+
+    }
+
+    public function update(PostRequest $request)
+    {
+        $this->postService->update($request, $request->id);
+
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
+    }
+
+    public function delete($id)
+    {
+        $this->postService->delete($id);
+
+        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
     }
 }

@@ -15,12 +15,12 @@ class PostService implements PostServiceInterface
         $this->postDao = $postDao;
     }
 
-    public function getPostsForPostPage()
+    public function index()
     {
-        return $this->postDao->getPostsForPostPage();
+        return $this->postDao->index();
     }
 
-    public function storePostForPostPage($request)
+    public function store($request)
     {
         $request->validate([
             'title' => 'required',
@@ -28,6 +28,21 @@ class PostService implements PostServiceInterface
             'status' => 'required'
         ]);
         
-        return $this->postDao->storePostForPostPage($request);
+        return $this->postDao->store($request);
+    }
+
+    public function edit($id)
+    {
+        return $this->postDao->edit($id);
+    }
+
+    public function update($request, $id)
+    {
+        return $this->postDao->update($request, $id);
+    }
+
+    public function delete($id)
+    {
+        return $this->postDao->delete($id);
     }
 }
