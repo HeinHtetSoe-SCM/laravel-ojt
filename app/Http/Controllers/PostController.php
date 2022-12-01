@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Post;
 use App\Contracts\Services\Post\PostServiceInterface;
 use App\Http\Requests\PostRequest;
 
@@ -17,6 +15,11 @@ class PostController extends Controller
         $this->postService = $postService;
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $posts = $this->postService->index();
@@ -26,11 +29,22 @@ class PostController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         return view('posts.create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  App\Http\Requests\PostRequest  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(PostRequest $request)
     {
         $this->postService->store($request);
@@ -38,6 +52,12 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
         $post = $this->postService->edit($id);
@@ -46,6 +66,13 @@ class PostController extends Controller
 
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  App\Http\Requests\PostRequest  $request
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function update(PostRequest $request)
     {
         $this->postService->update($request, $request->id);
@@ -53,6 +80,12 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function delete($id)
     {
         $this->postService->delete($id);
@@ -60,3 +93,4 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
     }
 }
+

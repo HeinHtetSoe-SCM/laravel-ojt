@@ -13,19 +13,19 @@
         <div class="pull-left">
             <h2 class="layout-header">Laravel Post CRUD</h2>
         </div>
-        <div class="pull-right">
-            <a class="btn" href="{{ route('posts.create') }}">Create</a>
+        <div class="d-grid">
+            <a class="btn btn-primary" href="{{ route('posts.create') }}">Create</a>
         </div>
     </div>
 
     @if ($message = Session::get('success'))
-        <div class="message">
-            <p>{{ $message }}</p>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ $message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
-    <table>
-        <caption>Post List</caption>
+    <table class="table table-hover table-bordered border-primary">
         <thead>
             <th>ID</th>
             <th>Title</th>
@@ -45,17 +45,21 @@
             <td>{{ $post['updated_at'] }}</td>
             <td>
                 <form action="{{ route('posts.delete', ['id' =>$post->id]) }}" method="post">
-                    <a class="btn" href="{{ route('posts.edit', ['id' =>$post->id]) }}">Edit</a>
+                    <a class="btn btn-primary" href="{{ route('posts.edit', ['id' =>$post->id]) }}">Edit</a>
 
                     @csrf
                     @method('DELETE')
 
-                    <button type="submit" class="delete-btn">Delete</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </td>
         </tr>
         @endforeach
     </table>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        {{ $posts->links() }}
+    </div>
 </body>
 </html>
 @endsection
+

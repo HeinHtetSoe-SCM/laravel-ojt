@@ -24,9 +24,9 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'description' => 'required',
-            'status' => 'required'
+            'title' => 'required|max:20',
+            'description' => 'required|max:50',
+            'status' => 'required|max:15'
         ];
     }
 
@@ -39,8 +39,12 @@ class PostRequest extends FormRequest
     {
         return [
             'title.required' => 'Title ဖြည့်ပေးပါခင်ဗျာ။',
+            'title.max' => 'Title တွင် စာလုံးရေ အလုံး ၂၀ သာ လက်ခံပါသည်။',
             'description.required' => 'Description ဖြည့်ပေးပါခင်ဗျာ။',
-            'status.required' => 'Status ဖြည့်ပေးပါခင်ဗျာ။'
+            'description.max' => 'Description တွင် စာလုံးရေ အလုံး ၅၀ သာ လက်ခံပါသည်။',
+            'status.required' => 'Status ဖြည့်ပေးပါခင်ဗျာ။',
+            'status.max' => 'Status တွင် စာလုံးရေ အလုံး ၁၅ လုံးသာ လက်ခံပါသည်။'
         ];
     }
 }
+

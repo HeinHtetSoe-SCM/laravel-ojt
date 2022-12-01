@@ -5,21 +5,10 @@
         <div class="pull-left">
             <h2 class="layout-header">Laravel Post CRUD</h2>
         </div>
-        <div class="pull-right">
-            <a class="btn" href="{{ route('posts.index') }}">Home</a>
+        <div class="d-grid">
+            <a class="btn btn-primary" href="{{ route('posts.index') }}">Home</a>
         </div>
     </div>
-
-    @if ($errors->any())
-        <div class="error-container">
-            There are some problems with your input. <br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     <div class="container">
         <div class="form">
@@ -27,10 +16,27 @@
                 @csrf
                 {{ method_field('PUT') }}
                 <legend>Edit Post</legend>
-                <input type="text" name="title" placeholder="Title" value="{{ $post->title }}">
-                <input type="text" name="description" placeholder="Description" value="{{ $post->description }}">
-                <input type="text" name="status" placeholder="Status" value="{{ $post->status }}">
-                <button type="submit" class="btn">Save</button>
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="title" placeholder="Title" value="{{ $post->title }}">
+                    @error('title')
+                        <div class="form-text text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="description" placeholder="Description" value="{{ $post->description }}">
+                    @error('description')
+                        <div class="form-text text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="status" placeholder="Status" value="{{ $post->status }}">
+                    @error('status')
+                        <div class="form-text text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
             </form>
         </div>
     </div>

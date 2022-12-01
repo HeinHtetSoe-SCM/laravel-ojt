@@ -26,3 +26,4 @@ Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name("posts.edi
 Route::post('/posts/store', [PostController::class, 'store'])->name("posts.store");
 Route::put('/posts/{id}/update', [PostController::class, 'update'])->name("posts.update");
 Route::delete('/posts/{id}', [PostController::class, 'delete'])->name("posts.delete");
+

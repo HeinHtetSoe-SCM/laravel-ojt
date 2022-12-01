@@ -2,11 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 use App\Models\Post;
 
 
@@ -22,3 +18,4 @@ class PostSeeder extends Seeder
         Post::factory()->count(10)->create();
     }
 }
+

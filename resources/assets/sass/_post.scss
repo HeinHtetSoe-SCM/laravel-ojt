@@ -1,0 +1,32 @@
+@import 'variables.scss';
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    background-color: $color-primary;
+}
+
+table {
+    width: 98% !important;
+    margin: 0 auto;
+    thead {
+        border: 5px solid $color-accent;
+        th {
+            text-transform: uppercase;
+            text-align: center;
+            color: $color-accent;
+            padding: 10px;
+            border-bottom: 1px solid $color-accent;
+        }
+    }
+    tr {
+        td {
+            text-align: center;
+        }
+    }
+}
+
+nav {
+    margin: 0 auto;
+}
+
+
