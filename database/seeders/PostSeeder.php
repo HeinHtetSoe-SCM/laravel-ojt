@@ -19,3 +19,4 @@ class PostSeeder extends Seeder
     }
 }
 
+
