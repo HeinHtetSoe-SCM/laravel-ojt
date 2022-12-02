@@ -1,0 +1,61 @@
+@import 'variables.scss';
+
+@mixin input($bgcolor: #d4d4d4) {
+    font-family: $font-family;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    outline: 0;
+    font-size: 15px;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: $bgcolor;
+    color: $color-accent;
+}
+
+body {
+    font-family: $font-family;
+}
+
+.d-grid {
+    text-align: center;
+    margin-bottom: 15px;
+    a {
+        margin: 0 auto;
+    }
+}
+
+.form {
+    position: relative;
+    z-index: 1;
+    max-width: 350px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    background-color: $color-primary;
+}
+
+.form {
+    legend {
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+        border-bottom: 3px solid $color-accent;
+    }
+
+    input {
+        @include input;
+
+        ::placeholder {
+            color: $color-primary;
+        }
+    }
+}
+
+.form .register-form {
+    display: none;
+}
+
+
