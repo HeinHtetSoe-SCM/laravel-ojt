@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
 
 
 /*
@@ -17,7 +18,7 @@ use App\Http\Controllers\PostController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name("home");
 
 // Post
 Route::get('/posts', [PostController::class, 'index'])->name("posts.index");
@@ -27,3 +28,5 @@ Route::post('/posts/store', [PostController::class, 'store'])->name("posts.store
 Route::put('/posts/{id}/update', [PostController::class, 'update'])->name("posts.update");
 Route::delete('/posts/{id}', [PostController::class, 'delete'])->name("posts.delete");
 
+// Category
+Route::resource('categories', CategoryController::class);

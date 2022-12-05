@@ -36,7 +36,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categories = $this->postService->create();
+        return view('posts.create', [
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -60,9 +63,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = $this->postService->edit($id);
-
-        return view('posts.edit', compact('post'));
+        $data = $this->postService->edit($id);
+        return view('posts.edit', compact('data'));
 
     }
 

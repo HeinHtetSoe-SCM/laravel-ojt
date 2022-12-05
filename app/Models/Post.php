@@ -12,7 +12,13 @@ class Post extends Model
     protected $fillable = [
         'title',
         'description',
-        'status'
+        'status',
+        'category'
     ];
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_posts', 'post_id', 'category_id');
+    }
 }
 
