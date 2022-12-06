@@ -11,7 +11,7 @@ interface PostServiceInterface
     */
     public function index();
 
-    public function create();
+    public function getCategories();
     /**
     * Post store for post page
     * @param object $request

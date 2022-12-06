@@ -13,31 +13,34 @@ Post Edit
             {{ method_field('PUT') }}
             <legend>Edit Post</legend>
             <div class="mb-3">
-                <input type="text" class="form-control" name="title" placeholder="Title" value="{{ $data['post']->title }}">
+                <input type="text" class="form-control" name="title" placeholder="Title" value="{{ old('title', $data['post']->title) }}">
                 @error('title')
                 <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" name="description" placeholder="Description" value="{{ $data['post']->description }}">
+                <input type="text" class="form-control" name="description" placeholder="Description" value="{{ old('description', $data['post']->description) }}">
                 @error('description')
                 <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" name="status" placeholder="Status" value="{{ $data['post']->status }}">
+                <input type="text" class="form-control" name="status" placeholder="Status" value="{{ old('status', $data['post']->status) }}">
                 @error('status')
                 <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
-                <select class="form-select" name="category[]" multiple>
-                    @foreach ( $data['categories'] as $category )
-                        @if ($loop->index === 0)
-                        <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
-                        @else
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                <select class="form-select" name="categories[]" multiple>
+                    @foreach ($data['categories'] as $category)
+                    <option 
+                        value="{{ $category->id }}" 
+                        @if (in_array($category->id, old('categories', $data['oldCategoryIds'])))
+                            selected
                         @endif
+                        >
+                        {{ $category->name }}
+                    </option>
                     @endforeach
                 </select>
             </div>

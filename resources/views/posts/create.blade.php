@@ -31,13 +31,9 @@ Post Create
                 @enderror
             </div>
             <div class="mb-3">
-                <select class="form-select" name="category[]" multiple>
-                    @foreach ( $categories as $category )
-                        @if ($loop->index === 0)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @else
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endif
+                <select class="form-select" name="categories[]" multiple>
+                    @foreach ( $categories as $index => $category )
+                        <option value="{{ $category->id }}" {{ ($index === 0) ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
                 </select>
             </div>

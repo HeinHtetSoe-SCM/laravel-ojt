@@ -27,7 +27,7 @@ class PostRequest extends FormRequest
             'title' => 'required|max:20',
             'description' => 'required|max:50',
             'status' => 'required|max:15',
-            'category' => 'required'
+            'categories' => 'required'
         ];
     }
 

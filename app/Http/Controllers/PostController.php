@@ -36,7 +36,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = $this->postService->create();
+        $categories = $this->postService->getCategories();
         return view('posts.create', [
             'categories' => $categories
         ]);

@@ -10,13 +10,6 @@ class CategoryDao implements CategoryDaoInterface
 {
     public function index()
     {
-        // $category = Category::find(1);
-        // dd($category->posts);
-        // foreach ($category->posts as $post) {
-        //     dd($post->pivot->post_id);
-        //     $post = Post::find($post->pivot->post_id);
-        //     dd($post->title);
-        // }
         return Category::latest()->paginate(5);
     }
 

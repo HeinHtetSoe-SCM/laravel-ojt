@@ -23,7 +23,7 @@ class PostDao implements PostDaoInterface
      * 
      * @return object
      */
-    public function create() {
+    public function getCategories() {
         return Category::all();
     }
 
@@ -39,7 +39,7 @@ class PostDao implements PostDaoInterface
             'description' => $request->description,
             'status' => $request->status
         ]);
-        $post->categories()->attach($request->category);
+        $post->categories()->attach($request->categories);
         return $post;
     }
 
@@ -52,7 +52,12 @@ class PostDao implements PostDaoInterface
     {
         $post = Post::findOrFail($id);
         $categories = Category::all();
-        return array("post" => $post, "categories" => $categories);
+        $oldCategoryIds = $post->categories->pluck('id')->toArray();
+        return [
+            "post" => $post, 
+            "categories" => $categories,
+            "oldCategoryIds" => $oldCategoryIds
+        ];
     }
 
     /**
@@ -70,7 +75,7 @@ class PostDao implements PostDaoInterface
             'status' => $request->status
         ]);
         $post->categories()->detach();
-        $post->categories()->attach($request->category);
+        $post->categories()->attach($request->categories);
         return $post;
     }
 
