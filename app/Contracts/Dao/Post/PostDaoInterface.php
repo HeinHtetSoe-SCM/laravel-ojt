@@ -11,6 +11,8 @@ interface PostDaoInterface
     */
     public function index();
 
+    public function getCategories();
+
     /**
     * Post store for post page
     * @param object $request

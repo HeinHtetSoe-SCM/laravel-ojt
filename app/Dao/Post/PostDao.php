@@ -4,6 +4,7 @@ namespace App\Dao\Post;
 
 use App\Models\Post;
 use App\Contracts\Dao\Post\PostDaoInterface;
+use App\Models\Category;
 
 class PostDao implements PostDaoInterface
 {
@@ -18,13 +19,28 @@ class PostDao implements PostDaoInterface
     }
 
     /**
+     * get category data to create post
+     * 
+     * @return object
+     */
+    public function getCategories() {
+        return Category::all();
+    }
+
+    /**
      * Store post for post page
      * @param object $request
      * @return object
      */
     public function store($request)
     {
-        return Post::create($request->all());
+        $post = Post::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'status' => $request->status
+        ]);
+        $post->categories()->attach($request->categories);
+        return $post;
     }
 
     /**
@@ -34,7 +50,14 @@ class PostDao implements PostDaoInterface
      */
     public function edit($id)
     {
-        return Post::findOrFail($id);
+        $post = Post::findOrFail($id);
+        $categories = Category::all();
+        $oldCategoryIds = $post->categories->pluck('id')->toArray();
+        return [
+            "post" => $post, 
+            "categories" => $categories,
+            "oldCategoryIds" => $oldCategoryIds
+        ];
     }
 
     /**
@@ -46,7 +69,14 @@ class PostDao implements PostDaoInterface
     public function update($request, $id)
     {
         $post = Post::findOrFail($id);
-        return $post->update($request->all());
+        $post->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'status' => $request->status
+        ]);
+        $post->categories()->detach();
+        $post->categories()->attach($request->categories);
+        return $post;
     }
 
     /**

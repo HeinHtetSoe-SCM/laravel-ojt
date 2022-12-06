@@ -24,6 +24,10 @@ class PostService implements PostServiceInterface
         return $this->postDao->index();
     }
 
+    public function getCategories()
+    {
+        return $this->postDao->getCategories();
+    }
     /**
      * Store post for post page
      * @param object $request

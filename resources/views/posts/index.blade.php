@@ -1,4 +1,4 @@
-@extends('posts.layout')
+@extends('layouts.app')
 
 @section('title')
 Post List
@@ -6,13 +6,8 @@ Post List
 
 @section('content')
 
-<div class="row">
-    <div class="pull-left">
-        <h2 class="layout-header">Laravel Post CRUD</h2>
-    </div>
-    <div class="d-grid">
-        <a class="btn btn-primary" href="{{ route('posts.create') }}">Create</a>
-    </div>
+<div class="d-grid gap-2">
+    <a class="btn btn-primary" href="{{ route('posts.create') }}">Create</a>
 </div>
 
 @if ($message = Session::get('success'))
@@ -28,6 +23,7 @@ Post List
         <th>Title</th>
         <th>Description</th>
         <th>Status</th>
+        <th>Category</th>
         <th>Created at</th>
         <th>Updated at</th>
         <th>Actions</th>
@@ -38,6 +34,11 @@ Post List
         <td>{{ $post['title'] }}</td>
         <td>{{ $post['description'] }}</td>
         <td>{{ $post['status'] }}</td>
+        <td>
+            @foreach ($post->categories as $category)
+            {{ $category->name }}
+            @endforeach
+        </td>
         <td>{{ $post['created_at'] }}</td>
         <td>{{ $post['updated_at'] }}</td>
         <td>

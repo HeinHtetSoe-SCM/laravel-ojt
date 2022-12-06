@@ -1,4 +1,4 @@
-@extends('posts.layout')
+@extends('layouts.app')
 
 
 @section('title')
@@ -6,15 +6,6 @@ Post Create
 @endsection
 
 @section('content')
-
-<div class="row">
-    <div class="pull-left">
-        <h2 class="layout-header">Laravel Post CRUD</h2>
-    </div>
-    <div class="d-grid">
-        <a class="btn btn-primary" href="{{ route('posts.index') }}">Home</a>
-    </div>
-</div>
 
 <div class="container">
     <div class="form">
@@ -38,6 +29,13 @@ Post Create
                 @error('status')
                 <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
+            </div>
+            <div class="mb-3">
+                <select class="form-select" name="categories[]" multiple>
+                    @foreach ( $categories as $index => $category )
+                        <option value="{{ $category->id }}" {{ ($index === 0) ? 'selected' : '' }}>{{ $category->name }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary">Create</button>
