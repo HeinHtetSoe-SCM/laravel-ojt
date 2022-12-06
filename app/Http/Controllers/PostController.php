@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Contracts\Services\Post\PostServiceInterface;
 use App\Http\Requests\PostRequest;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -80,6 +81,18 @@ class PostController extends Controller
         $this->postService->update($request, $request->id);
 
         return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
+    }
+
+    public function uploadFile(Request $request)
+    {
+        $this->postService->uploadFile($request);
+        
+        return redirect()->route('posts.index')->with('success', 'Posts imported successfully');
+    }
+
+    public function downloadFile()
+    {
+        return $this->postService->downloadFile();
     }
 
     /**

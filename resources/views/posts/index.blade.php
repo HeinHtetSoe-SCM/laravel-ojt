@@ -10,11 +10,21 @@ Post List
     <a class="btn btn-primary" href="{{ route('posts.create') }}">Create</a>
 </div>
 
+<div class="d-grid gap-2">
+    <form action="{{ route('posts.import') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="file" name="file" class="form-control">
+        <br>
+        <button class="btn btn-success">Import Posts</button>
+        <a href="{{ route('posts.export') }}"  id="export" class="btn btn-info">Export Posts</a>
+    </form>
+</div>
+
 @if ($message = Session::get('success'))
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        {{ $message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    {{ $message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 @endif
 
 <table class="table table-hover table-bordered border-primary">
@@ -59,5 +69,3 @@ Post List
 </div>
 
 @endsection
-
-

@@ -59,6 +59,15 @@ class PostService implements PostServiceInterface
         return $this->postDao->update($request, $id);
     }
 
+    public function uploadFile($request) {
+        return $this->postDao->uploadFile($request);
+    }
+
+    public function downloadFile()
+    {
+        return $this->postDao->downloadFile();
+    }
+
     /**
      * Delete post for post page
      * @param int $id
