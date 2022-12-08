@@ -30,3 +30,6 @@ Route::delete('/posts/{id}', [PostController::class, 'delete'])->name("posts.del
 
 // Category
 Route::resource('categories', CategoryController::class);
+
+Route::post('/upload-file',[PostController::class,'uploadFile'])->name('posts.import');
+Route::get('/download-file',[PostController::class,'downloadFile'])->name('posts.export');

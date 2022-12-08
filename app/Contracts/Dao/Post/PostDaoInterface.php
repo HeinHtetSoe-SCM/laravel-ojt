@@ -35,6 +35,10 @@ interface PostDaoInterface
     */
     public function update($request, $id);
 
+    public function uploadFile($request);
+
+    public function downloadFile();
+
     /**
     * Post delete for post page
     * @param int $id

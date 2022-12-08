@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('category_posts', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id');
-            $table->integer('post_id');
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('post_id');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
