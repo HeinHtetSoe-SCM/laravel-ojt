@@ -16,7 +16,7 @@ class PostDao implements PostDaoInterface
      * @return object
      */
     public function index()
-    {   
+    {
         return Post::latest()->paginate(5);
     }
 
@@ -25,7 +25,8 @@ class PostDao implements PostDaoInterface
      * 
      * @return object
      */
-    public function getCategories() {
+    public function getCategories()
+    {
         return Category::all();
     }
 
@@ -56,7 +57,7 @@ class PostDao implements PostDaoInterface
         $categories = Category::all();
         $oldCategoryIds = $post->categories->pluck('id')->toArray();
         return [
-            "post" => $post, 
+            "post" => $post,
             "categories" => $categories,
             "oldCategoryIds" => $oldCategoryIds
         ];
@@ -83,87 +84,38 @@ class PostDao implements PostDaoInterface
 
     public function uploadFile($request)
     {
-        $file = $request->file('file');
-        if ($file) {
-            $filename = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
-            $fileSize = $file->getSize();
+        try {
+            $existPost = Post::where('title', $request['title'])->first();
 
-            $this->checkUploadedFileProperties($extension, $fileSize);
-            $location = 'uploads';
-
-            $file->move($location, $filename);
-            $filepath = public_path($location."/".$filename);
-
-            $file = fopen($filepath, 'r');
-            $importData_arr = array();
-            $i = 0;
-            while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
-                $num = count($filedata);
-                if ($i == 0) {
-                    $i++;
-                    continue;
-                }
-
-                for ($c = 0; $c < $num; $c++) {
-                    $importData_arr[$i][] = $filedata[$c];
-                }
-                $i++;
-            }
-            fclose($file);
-
-            $j = 0;
-            foreach ($importData_arr as $importData) {
-                $title = $importData[0];
-                $description = $importData[1];
-                $status = $importData[2];
-                $requestCategories = explode(' | ', $importData[3]);
-                $j++;
-
-                try {
-                    DB::beginTransaction();
-                    $post = Post::create([
-                        'title' => $title,
-                        'description' => $description,
-                        'status' => $status
-                    ]);
-                    DB::commit();
-                    $databaseCategories = Category::all();
-                    $categoryIds = [];
-                    foreach ($databaseCategories as $databaseCategory) {
-                        foreach ($requestCategories as $requestCategory) {
-                            if ($databaseCategory->name === $requestCategory) {
-                                array_push($categoryIds, $databaseCategory->id);
-                            }
-                        }
-                    }
-                    $post->categories()->attach($categoryIds);
-                } catch (\Exception $e) {
-                    dd($e);
-                    DB::rollBack();
-                }
-            }
-            return response()->json([
-                'message' => "$j records successfully uploaded"
-            ]);
-        } else {
-            throw new \Exception('No file was uploaded', Response::HTTP_BAD_REQUEST);
-        }
-    }
-
-    public function checkUploadedFileProperties($extension, $fileSize)
-    {
-        $valid_extension = array("csv", "xlsx");
-        $maxFileSize = 2097152;
-
-        if (in_array(strtolower($extension), $valid_extension)) {
-            if ($fileSize <= $maxFileSize) {
-
+            if(empty($existPost)) {
+                $existPost = Post::create([
+                    'title' => $request['title'],
+                    'description' => $request['description'],
+                    'status' => $request['status']
+                ]);
             } else {
-                throw new \Exception('No file was uploaded', Response::HTTP_REQUEST_ENTITY_TOO_LARGE);
+                $existPost->update([
+                    'title' => $request['title'],
+                    'description' => $request['description'],
+                    'status' => $request['status']
+                ]);
             }
-        } else {
-            throw new \Exception('Invalid file extension', Response::HTTP_UNSUPPORTED_MEDIA_TYPE);
+
+            $categoryIds = [];
+            foreach ($request['categories'] as $category) {
+                if (trim($category)) {
+                    $existCategory = Category::where('name', $category)->first();
+                    if (empty($existCategory)) {
+                        $existCategory = Category::create(['name' => $category]);
+                    }
+                    $categoryIds[] = $existCategory->id;
+                }
+            }
+            $existPost->categories()->detach();
+            $existPost->categories()->attach($categoryIds);
+        } catch (\Exception $e) {
+            dd($e);
+            DB::rollBack();
         }
     }
 
@@ -187,7 +139,7 @@ class PostDao implements PostDaoInterface
             'Categories'
         ];
 
-        $callback = function() use($posts, $columns) {
+        $callback = function () use ($posts, $columns) {
             $file = fopen('php://output', 'w');
             fputcsv($file, $columns);
 
@@ -197,9 +149,9 @@ class PostDao implements PostDaoInterface
                 $row['Title'] = $post->title;
                 $row['Description'] = $post->description;
                 $row['Status'] = $post->status;
-                $row['Categories'] = implode(' | ', $categoryNames);
+                $row['Categories'] = implode('|', $categoryNames);
 
-                fputcsv($file, [ $row['Title'], $row['Description'], $row['Status'], $row['Categories'] ]);
+                fputcsv($file, [$row['Title'], $row['Description'], $row['Status'], $row['Categories']]);
             }
 
             fclose($file);

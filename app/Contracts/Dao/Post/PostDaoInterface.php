@@ -37,8 +37,6 @@ interface PostDaoInterface
 
     public function uploadFile($request);
 
-    public function checkUploadedFileProperties($extension, $fileSize);
-
     public function downloadFile();
 
     /**

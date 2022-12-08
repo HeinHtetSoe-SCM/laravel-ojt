@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Contracts\Services\Post\PostServiceInterface;
+use App\Http\Requests\FileRequest;
 use App\Http\Requests\PostRequest;
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -83,9 +83,13 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
     }
 
-    public function uploadFile(Request $request)
+    public function uploadFile(FileRequest $request)
     {
-        $this->postService->uploadFile($request);
+        $uploadMessage = $this->postService->uploadFile($request);
+
+        if (array_key_exists("error", $uploadMessage->original)) {
+            return redirect()->route('posts.index')->with('fail', 'Post format and number of CSV items do not match.');
+        }
         
         return redirect()->route('posts.index')->with('success', 'Posts imported successfully');
     }
