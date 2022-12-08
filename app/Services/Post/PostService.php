@@ -78,9 +78,9 @@ class PostService implements PostServiceInterface
             while (($filedata = fgetcsv($file, filesize($filepath), ",")) !== FALSE) {
                 $num = count($filedata);
                 if ($num < 4) {
-                    return response([
+                    return [
                         'error' => 'invalid datas'
-                    ]);
+                    ];
                 }
 
                 if ($i == 0) {
@@ -94,6 +94,7 @@ class PostService implements PostServiceInterface
                 $i++;
             }
             fclose($file);
+            unlink($filepath);
 
             foreach ($filteredDatas as $filteredData) {
                 $title = $filteredData[0];
@@ -108,9 +109,9 @@ class PostService implements PostServiceInterface
                 ];
                 $this->postDao->uploadFile($data);
             }
-            return response()->json([
+            return [
                 'success' => "Records successfully uploaded"
-            ]);
+            ];
         } else {
             throw new \Exception('No file was uploaded', Response::HTTP_BAD_REQUEST);
         }

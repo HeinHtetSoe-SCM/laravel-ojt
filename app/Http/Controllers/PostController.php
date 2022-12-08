@@ -87,11 +87,11 @@ class PostController extends Controller
     {
         $uploadMessage = $this->postService->uploadFile($request);
 
-        if (array_key_exists("error", $uploadMessage->original)) {
-            return redirect()->route('posts.index')->with('fail', 'Post format and number of CSV items do not match.');
+        if (isset($uploadMessage['error'])) {
+            return redirect()->route('posts.index')->with('message', 'Post format and number of CSV items do not match.');
         }
         
-        return redirect()->route('posts.index')->with('success', 'Posts imported successfully');
+        return redirect()->route('posts.index')->with('message', 'Posts imported successfully');
     }
 
     public function downloadFile()
