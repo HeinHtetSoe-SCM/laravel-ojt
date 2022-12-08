@@ -86,12 +86,13 @@ class PostController extends Controller
     public function uploadFile(FileRequest $request)
     {
         $uploadMessage = $this->postService->uploadFile($request);
+        $message = 'Posts imported successfully';
 
         if (isset($uploadMessage['error'])) {
-            return redirect()->route('posts.index')->with('message', 'Post format and number of CSV items do not match.');
+            $message = 'Post format and number of CSV items do not match.';
         }
         
-        return redirect()->route('posts.index')->with('message', 'Posts imported successfully');
+        return redirect()->route('posts.index')->with('message', $message);
     }
 
     public function downloadFile()
