@@ -13,7 +13,8 @@ class Post extends Model
         'title',
         'description',
         'status',
-        'category'
+        'category',
+        'image'
     ];
 
     public function categories()

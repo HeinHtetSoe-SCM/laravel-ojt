@@ -27,8 +27,20 @@
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-light" type="submit">Search</button>
+                    <a class="btn btn-outline-light mx-2 {{ auth()->check() ? 'd-none' : '' }} " href="{{ route('user.register') }}">Register</a>
+                    <a class="btn btn-outline-light {{ auth()->check() ? 'd-none' : '' }} " href="{{ route('user.login') }}">Login</a>
+                    <div class="flex-shrink-0 dropdown {{ auth()->check() ? '' : 'd-none' }}">
+                        <a class="btn btn-light d-block link-dark text-decoration-none dropdown-toggle mx-2 " data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ auth()->check() ? auth()->user()->name : ''}}
+                        </a>
+                        <ul class="dropdown-menu text-small shadow">
+                            <li><a class="dropdown-item" href="{{ route('user.profile') }}">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('user.logout') }}">Log out</a></li>
+                        </ul>
+                    </div>
                 </form>
             </div>
         </div>

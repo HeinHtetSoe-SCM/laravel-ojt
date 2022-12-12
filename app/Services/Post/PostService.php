@@ -4,7 +4,6 @@ namespace App\Services\Post;
 
 use App\Contracts\Dao\Post\PostDaoInterface;
 use App\Contracts\Services\Post\PostServiceInterface;
-use App\Models\Post;
 use Illuminate\Http\Response;
 
 class PostService implements PostServiceInterface
@@ -37,7 +36,24 @@ class PostService implements PostServiceInterface
      */
     public function store($request)
     {
-        return $this->postDao->store($request);
+        $image = $request->file('file');
+        if (is_null($image)) {
+            $imageName = 'default.png';
+        } else {
+            $imageName = $image->getClientOriginalName();
+            $location = 'images';
+            $image->move($location, $imageName);
+        }
+
+        $data = (object) [
+            'title' => $request->title,
+            'description' => $request->description,
+            'status' => $request->status,
+            'categories' => $request->categories,
+            'image' => $imageName
+        ];
+
+        return $this->postDao->store($data);
     }
 
     /**
@@ -58,7 +74,24 @@ class PostService implements PostServiceInterface
      */
     public function update($request, $id)
     {
-        return $this->postDao->update($request, $id);
+        $image = $request->file('file');
+        if (is_null($image)) {
+            $imageName = 'default.png';
+        } else {
+            $imageName = $image->getClientOriginalName();
+            $location = 'images';
+            $image->move($location, $imageName);
+        }
+
+        $data = (object) [
+            'title' => $request->title,
+            'description' => $request->description,
+            'status' => $request->status,
+            'categories' => $request->categories,
+            'image' => $imageName
+        ];
+
+        return $this->postDao->update($data, $id);
     }
 
     public function uploadFile($request)

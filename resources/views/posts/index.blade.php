@@ -33,6 +33,7 @@ Post List
 <table class="table table-hover table-bordered border-primary">
     <thead>
         <th>ID</th>
+        <th>Image</th>
         <th>Title</th>
         <th>Description</th>
         <th>Status</th>
@@ -44,6 +45,9 @@ Post List
     @foreach($posts as $post)
     <tr>
         <td>{{ $post->id }}</td>
+        <td style="height: 150px; width: 150px;">
+            <img src="{{ URL::to('/') }}/images/{{$post->image}}" alt="{{ $post->image }}" class="img-thumbnail"/>
+        </td>
         <td>{{ $post['title'] }}</td>
         <td>{{ $post['description'] }}</td>
         <td>{{ $post['status'] }}</td>
@@ -52,8 +56,8 @@ Post List
             {{ $category->name }}
             @endforeach
         </td>
-        <td>{{ $post['created_at'] }}</td>
-        <td>{{ $post['updated_at'] }}</td>
+        <td>{{ \Carbon\Carbon::parse($post['created_at'])->format('d/m/Y') }}</td>
+        <td>{{ \Carbon\Carbon::parse($post['updated_at'])->format('d/m/Y') }}</td>
         <td>
             <form action="{{ route('posts.delete', ['id' =>$post->id]) }}" method="post">
                 <a class="btn btn-primary" href="{{ route('posts.edit', ['id' =>$post->id]) }}">Edit</a>
