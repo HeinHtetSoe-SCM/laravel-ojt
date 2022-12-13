@@ -6,7 +6,7 @@ interface UserDaoInterface
 {
     public function register($request);
 
-    public function getUserData();
+    public function getUser();
 
     public function update($request);
 

@@ -49,5 +49,25 @@
         @yield('content')
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
+<script type="text/javascript">
+    $(document).ready(function(e) {
+
+
+        $('#image').change(function() {
+
+            let reader = new FileReader();
+
+            reader.onload = (e) => {
+
+                $('#preview-image').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(this.files[0]);
+
+        });
+
+    });
+</script>
 </html>

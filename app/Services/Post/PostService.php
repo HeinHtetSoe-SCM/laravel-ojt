@@ -4,6 +4,7 @@ namespace App\Services\Post;
 
 use App\Contracts\Dao\Post\PostDaoInterface;
 use App\Contracts\Services\Post\PostServiceInterface;
+use App\Models\Post;
 use Illuminate\Http\Response;
 
 class PostService implements PostServiceInterface
@@ -37,23 +38,16 @@ class PostService implements PostServiceInterface
     public function store($request)
     {
         $image = $request->file('file');
-        if (is_null($image)) {
-            $imageName = 'default.png';
-        } else {
-            $imageName = $image->getClientOriginalName();
+        $imageName = null;
+        if (!is_null($image)) {
+            $imageName = time() . '.' . $image->getClientOriginalName();
             $location = 'images';
             $image->move($location, $imageName);
         }
 
-        $data = (object) [
-            'title' => $request->title,
-            'description' => $request->description,
-            'status' => $request->status,
-            'categories' => $request->categories,
-            'image' => $imageName
-        ];
+        $request->image = $imageName;
 
-        return $this->postDao->store($data);
+        return $this->postDao->store($request);
     }
 
     /**
@@ -75,29 +69,22 @@ class PostService implements PostServiceInterface
     public function update($request, $id)
     {
         $image = $request->file('file');
-        if (is_null($image)) {
-            $imageName = 'default.png';
-        } else {
-            $imageName = $image->getClientOriginalName();
+        $imageName = Post::findOrFail($id)->image;
+        if (!is_null($image)) {
+            $imageName = time() . '.' . $image->getClientOriginalName();
             $location = 'images';
             $image->move($location, $imageName);
         }
 
-        $data = (object) [
-            'title' => $request->title,
-            'description' => $request->description,
-            'status' => $request->status,
-            'categories' => $request->categories,
-            'image' => $imageName
-        ];
+        $request->image = $imageName;
 
-        return $this->postDao->update($data, $id);
+        return $this->postDao->update($request, $id);
     }
 
     public function uploadFile($request)
     {
         $file = $request->file('file');
-        if($file) {
+        if ($file) {
             $filename = $file->getClientOriginalName();
             $location = 'uploads';
 

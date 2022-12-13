@@ -46,7 +46,11 @@ Post List
     <tr>
         <td>{{ $post->id }}</td>
         <td style="height: 150px; width: 150px;">
-            <img src="{{ URL::to('/') }}/images/{{$post->image}}" alt="{{ $post->image }}" class="img-thumbnail"/>
+            @if($post->image === null)
+            <img src="/assets/default.png" alt="default image" class="img-thumbnail"/>
+            @else
+            <img src="/images/{{ $post->image }}" alt="{{ $post->image }}" class="img-thumbnail"/>
+            @endif
         </td>
         <td>{{ $post['title'] }}</td>
         <td>{{ $post['description'] }}</td>

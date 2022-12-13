@@ -19,9 +19,9 @@ class UserService implements UserServiceInterface
         return $this->userDao->register($request);
     }
 
-    public function getUserData()
+    public function getUser()
     {
-        return $this->userDao->getUserData();
+        return $this->userDao->getUser();
     }
 
     public function update($request)

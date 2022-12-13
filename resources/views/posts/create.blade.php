@@ -14,7 +14,12 @@ Post Create
             <legend>Create Post</legend>
             <div class="mb-3">
                 <label for="image">Image</label>
-                <input type="file" class="form-control" name="file" id="image">
+                <input type="file" class="form-control" name="file" id="image" style="display: none;">
+                <div style="height: 100px; width: 150px;">
+                    <label for="image" style="display: block; height: 100px; width: 150px;">
+                        <img id="preview-image" src="/assets/default.png" alt="default image" class="img-thumbnail" />
+                    </label>
+                </div>
                 @error('file')
                 <div class="form-text text-danger">{{ $message }}</div>
                 @enderror

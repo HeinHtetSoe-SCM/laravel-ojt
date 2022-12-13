@@ -24,10 +24,9 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $user = Auth::user();
         return [
             'name' => 'required|max:50',
-            'email' => 'required|email|unique:users,email,'.$user->id,
+            'email' => 'required|email|unique:users,email,' . auth()->id(),
         ];
     }
 }

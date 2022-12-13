@@ -20,17 +20,14 @@ class UserDao implements UserDaoInterface
         return $user;
     }
 
-    public function getUserData()
+    public function getUser()
     {
         return Auth::user();
     }
 
     public function update($request)
     {
-        $loggedInUser = Auth::user();
-        $user = User::findOrFail($loggedInUser->id);
-
-        $user->update([
+        User::where('id', auth()->id())->update([
             'name' => $request->name,
             'email' => $request->email
         ]);
@@ -38,10 +35,7 @@ class UserDao implements UserDaoInterface
 
     public function changePassword($request)
     {
-        $loggedInUser = Auth::user();
-        $user = User::findOrFail($loggedInUser->id);
-
-        $user->update([
+        User::where('id', auth()->id())->update([
             'password' => Hash::make($request->password)
         ]);
     }

@@ -50,8 +50,8 @@ class UserController extends Controller
 
     public function profile()
     {
-        $userData = $this->userService->getUserData();
-        return view('user.profile', compact('userData'));
+        $user = $this->userService->getUser();
+        return view('user.profile', compact('user'));
     }
 
     public function edit()
