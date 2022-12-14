@@ -37,6 +37,16 @@ class PostService implements PostServiceInterface
      */
     public function store($request)
     {
+        $image = $request->file('file');
+        $imageName = null;
+        if (!is_null($image)) {
+            $imageName = time() . '.' . $image->getClientOriginalName();
+            $location = 'images';
+            $image->move($location, $imageName);
+        }
+
+        $request->image = $imageName;
+
         return $this->postDao->store($request);
     }
 
@@ -58,13 +68,23 @@ class PostService implements PostServiceInterface
      */
     public function update($request, $id)
     {
+        $image = $request->file('file');
+        $imageName = Post::findOrFail($id)->image;
+        if (!is_null($image)) {
+            $imageName = time() . '.' . $image->getClientOriginalName();
+            $location = 'images';
+            $image->move($location, $imageName);
+        }
+
+        $request->image = $imageName;
+
         return $this->postDao->update($request, $id);
     }
 
     public function uploadFile($request)
     {
         $file = $request->file('file');
-        if($file) {
+        if ($file) {
             $filename = $file->getClientOriginalName();
             $location = 'uploads';
 

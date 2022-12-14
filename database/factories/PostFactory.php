@@ -20,6 +20,7 @@ class PostFactory extends Factory
             'title' => $this->faker->word,
             'description' => $this->faker->sentence,
             'status' => $this->faker->word,
+            'image' => null,
             'deleted_at' => null,
         ];
     }

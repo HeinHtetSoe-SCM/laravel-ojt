@@ -13,7 +13,7 @@ Category Edit
             {{ method_field('PUT') }}
             <legend>Edit Category</legend>
             <div class="mb-3">
-                <input type="text" class="form-control" name="name" placeholder="Name" value="{{ $category->name }}">
+                <input type="text" class="form-control" name="name" placeholder="Name" value="{{ old('name', $category->name) }}">
                 @error('name')
                 <div class="form-text text-danger">{{ $message }}</div>
                 @enderror

@@ -9,31 +9,47 @@ Post Create
 
 <div class="container">
     <div class="form">
-        <form action="{{ route('posts.store') }}" method="POST">
+        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <legend>Create Post</legend>
             <div class="mb-3">
-                <input type="text" class="form-control" name="title" placeholder="Title" value="{{ old('title') }}">
+                <label for="image">Image</label>
+                <input type="file" class="form-control" name="file" id="image" style="display: none;">
+                <div style="height: 100px; width: 150px;">
+                    <label for="image" style="display: block; height: 100px; width: 150px;">
+                        <img id="preview-image" src="/assets/default.png" alt="default image" class="img-thumbnail" />
+                    </label>
+                </div>
+                @error('file')
+                <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" name="title" placeholder="Title" id="title" value="{{ old('title') }}">
                 @error('title')
                 <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" name="description" placeholder="Description" value="{{ old('description') }}">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" name="description" placeholder="Description" id="description" value="{{ old('description') }}">
                 @error('description')
                 <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" name="status" placeholder="Status" value="{{ old('status') }}">
+                <label for="status">Status</label>
+                <input type="text" class="form-control" name="status" placeholder="Status" id="status" value="{{ old('status') }}">
                 @error('status')
                 <div class="form-text text-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3">
-                <select class="form-select" name="categories[]" multiple>
+                <label for="category">Category</label>
+                <select class="form-select" name="categories[]" id="category" multiple>
                     @foreach ( $categories as $index => $category )
-                        <option value="{{ $category->id }}" {{ ($index === 0) ? 'selected' : '' }}>{{ $category->name }}</option>
+                    <option value="{{ $category->id }}" {{ ($index === 0) ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
                 </select>
             </div>

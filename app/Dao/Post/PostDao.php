@@ -5,7 +5,6 @@ namespace App\Dao\Post;
 use App\Models\Post;
 use App\Contracts\Dao\Post\PostDaoInterface;
 use App\Models\Category;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class PostDao implements PostDaoInterface
@@ -40,8 +39,10 @@ class PostDao implements PostDaoInterface
         $post = Post::create([
             'title' => $request->title,
             'description' => $request->description,
-            'status' => $request->status
+            'status' => $request->status,
+            'image' => $request->image
         ]);
+
         $post->categories()->attach($request->categories);
         return $post;
     }
@@ -75,7 +76,8 @@ class PostDao implements PostDaoInterface
         $post->update([
             'title' => $request->title,
             'description' => $request->description,
-            'status' => $request->status
+            'status' => $request->status,
+            'image' => $request->image
         ]);
         $post->categories()->detach();
         $post->categories()->attach($request->categories);

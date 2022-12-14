@@ -27,7 +27,8 @@ class PostRequest extends FormRequest
             'title' => 'required|max:20',
             'description' => 'required|max:50',
             'status' => 'required|max:15',
-            'categories' => 'required'
+            'categories' => 'required',
+            'file' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ];
     }
 
@@ -45,7 +46,7 @@ class PostRequest extends FormRequest
             'description.max' => 'Description တွင် စာလုံးရေ အလုံး ၅၀ သာ လက်ခံပါသည်။',
             'status.required' => 'Status ဖြည့်ပေးပါခင်ဗျာ။',
             'status.max' => 'Status တွင် စာလုံးရေ အလုံး ၁၅ လုံးသာ လက်ခံပါသည်။',
-            'category.required' => 'Category ရွေးပေးပါခင်ဗျာ။'
+            'categories.required' => 'Category ရွေးပေးပါခင်ဗျာ။'
         ];
     }
 }
